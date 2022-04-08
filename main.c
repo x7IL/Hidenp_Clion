@@ -1,28 +1,31 @@
 #include <stdio.h>
-
-int main() {
-    char tab[] = "gtwthgdwthdwfteewhrtag6h4ffdhsd";
-    char tab2[] = "ddf6ewg64f";
+#include <unistd.h>
+/*
+ *
+ * ./a.out padinton "paqefwtdjetyiytjneytjoeyjnejeyj" | cat -e
+ * ./a.out ddf6vewg64f gtwthgdwthdwfteewhrtag6h4ffdhsd | cat -e
+ * ./a.out >/dev/null || echo “Exit status: $?”
+ */
+int main(int argc, char ** argv) {
     int a = 0;
     int b = 0;
-    for(int i = 0; tab2[i] != '\0'; i++){
-        a++;
+
+    if(argv[1] == NULL){
+        write(2,"Usage: ./hidenp needle haystack\n",33);
+        return 84;
     }
-    for(int i = 0; tab2[i] != '\0'; i++){
-        for(int j = 0; tab[j] != '\0';j++){
-            if(tab2[i] == tab[j]){
+    else {
+        int j = 0;
+        for (int i = 0; argv[2][i] != '\0'; i++) {
+            if (argv[1][j] == argv[2][i]) {
                 b++;
-                break;
+                j++;
+            }
+            if( argv[1][j] == '\0'){
+                b = a;
             }
         }
+        write(2, (b == a) ? "1" : "0", 2);
+        return 0;
     }
-
-    if(b == a){
-        printf("1");
-    }
-    else{
-        printf("0");
-    }
-    
-    return 0;
 }
